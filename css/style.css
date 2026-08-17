@@ -319,9 +319,12 @@ form.site-form textarea{min-height:130px;resize:vertical;}
 .back-to-top.show{opacity:1;pointer-events:auto;}
 .back-to-top:hover{transform:translateY(-3px);}
 
+/* ---------- Two-column split sections (photo + text) ---------- */
+.split-grid{display:grid;grid-template-columns:1fr 1fr;}
+
 /* ---------- Responsive ---------- */
 @media (max-width:960px){
-  .hero-grid,.approach-grid,.contact-grid{grid-template-columns:1fr;}
+  .hero-grid,.contact-grid,.split-grid{grid-template-columns:1fr;}
   .card-grid,.card-grid.cols-4{grid-template-columns:repeat(2,1fr);}
   .apollo-grid{grid-template-columns:repeat(3,1fr);}
   .footer-grid{grid-template-columns:1fr 1fr;}
