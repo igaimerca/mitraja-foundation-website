@@ -23,7 +23,8 @@
    data/activities.sample.csv so the layout always has content to show.
    ========================================================================== */
 
-const SHEET_CSV_URL = ""; // <-- paste the "Publish to web" CSV link here
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9WMLKTjhSnRVr-uTDK3dPGHnE3cGVI_9i9autiQJzJo6y5j1WuPOZ3c6SmbuLU2Ja7Cg2zc5vCIsk/pub?output=csv"; // <-- paste the "Publish to web" CSV link here
+
 const FALLBACK_CSV_URL = "../data/activities.sample.csv";
 
 function parseCSV(text) {
@@ -54,17 +55,10 @@ function parseCSV(text) {
   });
 }
 
-const CATEGORY_COLORS = {
-  'Art': 'pb-1', 'Health': 'pb-2', 'Health & Hygiene': 'pb-2', 'Library': 'pb-3',
-  'Pottery': 'pb-4', 'Green Skills': 'pb-6', 'Sports': 'pb-5', 'Community': 'pb-1',
-  'Leadership': 'pb-6', 'default': 'pb-3'
-};
-
 function activityCard(item) {
-  const cls = CATEGORY_COLORS[item.Category] || CATEGORY_COLORS.default;
   const img = item.ImageURL
     ? `<img src="${item.ImageURL}" alt="${item.Title}" loading="lazy">`
-    : `<div class="photo-block ${cls}" style="height:100%;border-radius:0;"><span class="ph-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><span class="ph-label">Photo coming soon</span></div>`;
+    : `<div class="activity-cover-placeholder"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Photo coming soon</span></div>`;
   return `
   <article class="activity-card reveal in" data-category="${item.Category || ''}">
     <div class="activity-cover">${img}</div>
@@ -111,11 +105,11 @@ async function loadActivities() {
   renderActivities(items);
   buildFilters(items);
 
-  if (status) {
-    status.textContent = usedFallback
-      ? 'Showing sample activities - connect the live Google Sheet in js/activities.js to go live.'
-      : `Updated from Mitraja's shared activity log · ${items.length} entries.`;
-  }
+  // if (status) {
+  //   status.textContent = usedFallback
+  //     ? 'Showing sample activities - connect the live Google Sheet in js/activities.js to go live.'
+  //     : `Updated from Mitraja's shared activity log · ${items.length} entries.`;
+  // }
 }
 
 function renderActivities(items) {

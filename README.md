@@ -5,6 +5,7 @@ Static site for Mitraja Foundation (Sidhabari, Dudhnoi, Goalpara, Assam). Plain 
 ## Status
 
 This is a first working build, done without live access to the client's Drive folders (Instagram reference photos, NGO Documentation, "Other material"). Content and structure are drawn from:
+
 - The current site, https://www.mitraja.org/
 - The two Summer Camp 2026 docs (Reflections + Completion Report)
 - The Manal Foundation reference (separate Story / Governance tabs, per client preference)
@@ -31,7 +32,7 @@ data/activities.sample.csv   Fallback content so the feed is never empty
 
 - **Fonts:** Bricolage Grotesque (headings) + Inter (body), loaded from Google Fonts - per the client's reference sites.
 - **Colors, mapped to values** (explained in full on `our-story/#values`):
-  - Marigold `#E88A2E` → *Mitra*, friendship - used for every "join us" moment
+  - Marigold `#E88A2E` → _Mitra_, friendship - used for every "join us" moment
   - Terracotta `#B4502A` → rootedness - Goalparia clay, pottery
   - Deep Moss `#1F4D3E` → growth, green skills, sustainability
   - Indigo Ink `#202B45` → trust, leadership, the library
@@ -42,6 +43,7 @@ data/activities.sample.csv   Fallback content so the feed is never empty
 A freeform Google **Doc** can't be parsed reliably - no structure, and formatting varies every time someone edits it. Instead, `programs/#recent-work` reads a Google **Sheet**, published to the web as CSV. This is the standard reliable pattern for "client updates content, static site reflects it, no rebuild" - flagging this since the brief said "Google Document" and we implemented it as a Sheet for reliability.
 
 **One-time setup for the Mitraja team:**
+
 1. Create a Google Sheet with exactly these column headers in row 1:
    `Date, Title, Category, Description, ImageURL, Location, Participants, FeedType`
    - `Date`: e.g. `2026-08-10`
@@ -57,13 +59,23 @@ Until step 3 is done, the page automatically falls back to `data/activities.samp
 ## Adding real photos
 
 Photo slots are `<div class="photo-block pb-N">` elements with an emoji + label. To swap one for a real photo:
+
 ```html
 <!-- before -->
-<div class="photo-block pb-1" style="aspect-ratio:4/3;"><span class="ph-emoji">🚀</span><span class="ph-label">Apollo Club, Sidhabari</span></div>
+<div class="photo-block pb-1" style="aspect-ratio:4/3;">
+  <span class="ph-emoji">🚀</span
+  ><span class="ph-label">Apollo Club, Sidhabari</span>
+</div>
 
 <!-- after -->
-<div class="photo-block" style="aspect-ratio:4/3;"><img src="../assets/images/apollo-club.jpg" alt="Apollo Club session in Sidhabari"></div>
+<div class="photo-block" style="aspect-ratio:4/3;">
+  <img
+    src="../assets/images/apollo-club.jpg"
+    alt="Apollo Club session in Sidhabari"
+  />
+</div>
 ```
+
 Drop images into `assets/images/`. Once the Drive folders are accessible (Instagram reference set, Documentation, Photos, and the "Other material" folder shared via contact.techpose@gmail.com), the next pass will replace these directly.
 
 ## Deploying to GitHub Pages
