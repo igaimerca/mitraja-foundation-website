@@ -1,4 +1,4 @@
-// Mitraja Foundation — shared site behaviour
+// Mitraja Foundation - shared site behaviour
 
 // Mobile nav toggle
 const hamburger = document.getElementById('hamburger');

@@ -1,14 +1,14 @@
 /* ==========================================================================
-   MITRAJA FOUNDATION — Activities feed, driven by a Google Sheet
+   MITRAJA FOUNDATION - Activities feed, driven by a Google Sheet
 
    HOW THE "CLIENT EDITS, SITE UPDATES" SYSTEM WORKS
    --------------------------------------------------------------------------
    A plain Google Doc can't be parsed reliably (freeform paragraphs, no
    structure). Instead this page reads a Google SHEET that the Mitraja team
-   edits directly — one row per activity/photo update. Google lets you
+   edits directly - one row per activity/photo update. Google lets you
    "Publish to web" a sheet as a CSV, which gives a public URL that always
    reflects the latest saved version. This page fetches that CSV on load,
-   with no backend and no rebuild step — so it works on GitHub Pages.
+   with no backend and no rebuild step - so it works on GitHub Pages.
 
    SETUP FOR THE CLIENT (one-time, see README.md for full steps):
    1. Duplicate the "Mitraja Activities" Google Sheet template.
@@ -64,7 +64,7 @@ function activityCard(item) {
   const cls = CATEGORY_COLORS[item.Category] || CATEGORY_COLORS.default;
   const img = item.ImageURL
     ? `<img src="${item.ImageURL}" alt="${item.Title}" loading="lazy">`
-    : `<div class="photo-block ${cls}" style="height:100%;border-radius:0;"><span class="ph-emoji">📷</span><span class="ph-label">Photo coming soon</span></div>`;
+    : `<div class="photo-block ${cls}" style="height:100%;border-radius:0;"><span class="ph-emoji"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><span class="ph-label">Photo coming soon</span></div>`;
   return `
   <article class="activity-card reveal in" data-category="${item.Category || ''}">
     <div class="activity-cover">${img}</div>
@@ -73,7 +73,7 @@ function activityCard(item) {
       <h3>${item.Title || 'Untitled activity'}</h3>
       ${item.Category ? `<span class="activity-tag">${item.Category}</span>` : ''}
       <p class="activity-desc">${item.Description || ''}</p>
-      ${item.Location ? `<p class="activity-desc"><strong>📍 ${item.Location}</strong>${item.Participants ? ` · ${item.Participants} participants` : ''}</p>` : ''}
+      ${item.Location ? `<p class="activity-desc"><strong>${item.Location}</strong>${item.Participants ? ` · ${item.Participants} participants` : ''}</p>` : ''}
     </div>
   </article>`;
 }
@@ -99,7 +99,7 @@ async function loadActivities() {
       items = await tryFetch(FALLBACK_CSV_URL);
       usedFallback = true;
     } catch (e2) {
-      if (status) { status.textContent = 'Could not load activities right now — please check back soon.'; status.classList.add('error'); }
+      if (status) { status.textContent = 'Could not load activities right now - please check back soon.'; status.classList.add('error'); }
       return;
     }
   }
@@ -113,7 +113,7 @@ async function loadActivities() {
 
   if (status) {
     status.textContent = usedFallback
-      ? 'Showing sample activities — connect the live Google Sheet in js/activities.js to go live.'
+      ? 'Showing sample activities - connect the live Google Sheet in js/activities.js to go live.'
       : `Updated from Mitraja's shared activity log · ${items.length} entries.`;
   }
 }
