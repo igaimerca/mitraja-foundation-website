@@ -139,3 +139,42 @@ if (backToTop) {
     else if (e.key === 'ArrowRight') next();
   });
 })();
+
+// Hero slider (homepage only, gracefully does nothing elsewhere)
+(function heroSlider() {
+  const root = document.getElementById('heroSlider');
+  if (!root) return;
+
+  const slides = Array.from(root.querySelectorAll('.hero-slide'));
+  const dots = Array.from(root.querySelectorAll('.hero-dot'));
+  const prevBtn = root.querySelector('.hero-prev');
+  const nextBtn = root.querySelector('.hero-next');
+  if (slides.length < 2) return;
+
+  let index = slides.findIndex(s => s.classList.contains('active'));
+  if (index < 0) index = 0;
+  const DURATION = 6500;
+  let timer = null;
+
+  function show(i) {
+    slides[index].classList.remove('active');
+    dots[index] && dots[index].classList.remove('active');
+    index = (i + slides.length) % slides.length;
+    slides[index].classList.add('active');
+    dots[index] && dots[index].classList.add('active');
+  }
+  function next() { show(index + 1); }
+  function prev() { show(index - 1); }
+  function restart() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(next, DURATION);
+  }
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); restart(); }));
+  nextBtn && nextBtn.addEventListener('click', () => { next(); restart(); });
+  prevBtn && prevBtn.addEventListener('click', () => { prev(); restart(); });
+  root.addEventListener('mouseenter', () => timer && clearInterval(timer));
+  root.addEventListener('mouseleave', restart);
+
+  restart();
+})();

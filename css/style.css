@@ -153,21 +153,49 @@ p{color:var(--text-soft);}
 .m-num{font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:var(--moss);}
 .m-lbl{font-size:.85rem;color:var(--text-soft);max-width:14ch;}
 
-/* ---------- Hero banner (full-width image) ---------- */
-.hero-banner{position:relative;overflow:hidden;}
-.hero-banner-media{position:relative;aspect-ratio:16/9;min-height:460px;}
-.hero-banner-media img{width:100%;height:100%;object-fit:cover;display:block;filter:var(--photo-grade);}
-.hero-banner-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,12,8,.05) 0%,rgba(15,12,8,.35) 45%,rgba(15,12,8,.88) 100%);}
-.hero-banner-content{position:absolute;inset:0;z-index:1;display:flex;align-items:flex-end;padding-bottom:44px;}
+/* ---------- Hero banner (full-width slider) ---------- */
+.hero-banner{position:relative;overflow:hidden;width:100%;}
+.hero-banner-media{position:relative;width:100%;aspect-ratio:16/9;min-height:460px;background:var(--ink);}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease;}
+.hero-slide.active{opacity:1;z-index:1;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;display:block;filter:var(--photo-grade);transform:scale(1);}
+.hero-slide.active img{animation:heroKenBurns 9s ease-out forwards;}
+@keyframes heroKenBurns{from{transform:scale(1);}to{transform:scale(1.07);}}
+/* A light, even scrim instead of a heavy bottom gradient - the photo stays
+   visible; legibility comes from the text-shadow on the copy itself. */
+.hero-banner-media::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(15,12,8,0) 0%,rgba(15,12,8,0) 50%,rgba(15,12,8,.34) 100%);pointer-events:none;}
+.hero-banner-content{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;padding-bottom:44px;}
+.hero-banner-content .eyebrow,
+.hero-banner-content h1,
+.hero-banner-content .hero-lede{text-shadow:0 1px 3px rgba(0,0,0,.8), 0 4px 14px rgba(0,0,0,.65), 0 16px 40px rgba(0,0,0,.5);}
 .hero-banner-content h1{color:#fff;}
-.hero-banner-content .hero-lede{color:#EDEAE1;}
+.hero-banner-content .hero-lede{color:#F5F2EA;}
+
+.hero-slider-nav{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:0 16px;pointer-events:none;}
+.hero-arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(15,12,8,.35);backdrop-filter:blur(4px);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s, transform .15s;}
+.hero-arrow:hover{background:rgba(15,12,8,.6);transform:scale(1.06);}
+.hero-slider-dots{position:absolute;top:20px;right:20px;z-index:3;display:flex;gap:8px;}
+.hero-dot{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:rgba(255,255,255,.15);cursor:pointer;padding:0;transition:background .2s, transform .2s;}
+.hero-dot.active{background:var(--marigold);border-color:var(--marigold);transform:scale(1.2);}
+
 .hero-banner-meta{background:var(--ink);}
-.hero-banner-meta .container{padding:22px 24px;}
-.hero-banner-meta .m-num{color:var(--marigold);}
-.hero-banner-meta .m-lbl{color:#C7CBDA;}
+.hero-stat-strip{display:grid;grid-template-columns:repeat(3,1fr);width:100%;}
+.hero-stat-strip>div{padding:22px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.12);}
+.hero-stat-strip>div:last-child{border-right:none;}
+.hero-stat-strip .m-num{color:var(--marigold);}
+.hero-stat-strip .m-lbl{color:#C7CBDA;max-width:none;}
+
+@media (max-width:960px){
+  .hero-banner-content .eyebrow{margin-bottom:10px;}
+}
 @media (max-width:720px){
-  .hero-banner-media{aspect-ratio:auto;min-height:560px;}
+  .hero-banner-media{aspect-ratio:auto;min-height:600px;}
   .hero-banner-content{padding-bottom:32px;}
+  .hero-arrow{width:36px;height:36px;font-size:1.2rem;}
+  .hero-slider-dots{top:auto;bottom:14px;right:50%;transform:translateX(50%);}
+  .hero-stat-strip{grid-template-columns:1fr;}
+  .hero-stat-strip>div{border-right:none;border-bottom:1px solid rgba(255,255,255,.12);}
+  .hero-stat-strip>div:last-child{border-bottom:none;}
 }
 
 .quote-card{
