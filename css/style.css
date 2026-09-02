@@ -125,8 +125,8 @@ p{color:var(--text-soft);}
 }
 .nav-wrap{max-width:var(--container);margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
 .brand{display:flex;align-items:center;gap:10px;}
-.brand img,.footer-brand img{height:38px;width:auto;display:block;}
-.footer-brand img{height:34px;filter:invert(1) brightness(1.15);}
+.brand img,.footer-brand img{height:54px;width:auto;display:block;}
+.footer-brand img{height:48px;filter:invert(1) brightness(1.15);}
 .brand-text{font-family:var(--font-display);font-weight:800;font-size:1.15rem;color:var(--ink);line-height:1.05;}
 .brand-text span{display:block;}
 .brand-text .top{color:var(--marigold-dark);}
@@ -152,6 +152,23 @@ p{color:var(--text-soft);}
 .hero-meta-row{display:flex;gap:34px;flex-wrap:wrap;}
 .m-num{font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:var(--moss);}
 .m-lbl{font-size:.85rem;color:var(--text-soft);max-width:14ch;}
+
+/* ---------- Hero banner (full-width image) ---------- */
+.hero-banner{position:relative;overflow:hidden;}
+.hero-banner-media{position:relative;aspect-ratio:16/9;min-height:460px;}
+.hero-banner-media img{width:100%;height:100%;object-fit:cover;display:block;filter:var(--photo-grade);}
+.hero-banner-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,12,8,.05) 0%,rgba(15,12,8,.35) 45%,rgba(15,12,8,.88) 100%);}
+.hero-banner-content{position:absolute;inset:0;z-index:1;display:flex;align-items:flex-end;padding-bottom:44px;}
+.hero-banner-content h1{color:#fff;}
+.hero-banner-content .hero-lede{color:#EDEAE1;}
+.hero-banner-meta{background:var(--ink);}
+.hero-banner-meta .container{padding:22px 24px;}
+.hero-banner-meta .m-num{color:var(--marigold);}
+.hero-banner-meta .m-lbl{color:#C7CBDA;}
+@media (max-width:720px){
+  .hero-banner-media{aspect-ratio:auto;min-height:560px;}
+  .hero-banner-content{padding-bottom:32px;}
+}
 
 .quote-card{
   background:var(--ink);color:#fff;border-radius:var(--radius);padding:34px 32px;position:relative;overflow:hidden;
