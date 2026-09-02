@@ -67,7 +67,7 @@ if (backToTop) {
 // full resolution. Uses click delegation so it also picks up images the
 // live activity feed (js/activities.js) injects after this script runs.
 (function lightbox() {
-  const CLICKABLE = '.photo-gallery img, .photo-block.has-photo img, .activity-cover img, .img-zoomable';
+  const CLICKABLE = '.photo-gallery img, .photo-block.has-photo img, .activity-cover img, .ba-panel img, .img-zoomable';
 
   const lb = document.createElement('div');
   lb.className = 'lightbox';
