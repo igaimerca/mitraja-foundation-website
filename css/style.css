@@ -161,15 +161,21 @@ p{color:var(--text-soft);}
 .hero-slide img{width:100%;height:100%;object-fit:cover;display:block;filter:var(--photo-grade);transform:scale(1);}
 .hero-slide.active img{animation:heroKenBurns 9s ease-out forwards;}
 @keyframes heroKenBurns{from{transform:scale(1);}to{transform:scale(1.07);}}
-/* A light, even scrim instead of a heavy bottom gradient - the photo stays
-   visible; legibility comes from the text-shadow on the copy itself. */
-.hero-banner-media::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(15,12,8,.4) 0%,rgba(15,12,8,.38) 50%,rgba(15,12,8,.62) 100%);pointer-events:none;}
-.hero-banner-content{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;padding-bottom:44px;}
-.hero-banner-content .eyebrow,
-.hero-banner-content h1,
-.hero-banner-content .hero-lede{text-shadow:0 1px 3px rgba(0,0,0,.8), 0 4px 14px rgba(0,0,0,.65), 0 16px 40px rgba(0,0,0,.5);}
-.hero-banner-content h1{color:#fff;}
-.hero-banner-content .hero-lede{color:#F5F2EA;}
+/* A modest, even scrim keeps the photo readable as a photo; the real
+   contrast work happens in the frosted card the copy sits in below. */
+.hero-banner-media::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(15,12,8,.22) 0%,rgba(15,12,8,.18) 45%,rgba(15,12,8,.4) 100%);pointer-events:none;}
+.hero-banner-content{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;padding-bottom:56px;}
+
+.hero-text-panel{
+  display:inline-block;max-width:600px;
+  background:rgba(13,11,8,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.14);border-radius:20px;
+  padding:32px 34px;box-shadow:0 24px 60px -20px rgba(0,0,0,.55);
+}
+.hero-text-panel h1{
+  color:#fff;font-size:clamp(1.9rem,3.4vw,2.8rem);line-height:1.14;letter-spacing:-0.01em;margin-top:10px;
+}
+.hero-text-panel .hero-lede{color:#EAE6DA;font-size:1rem;line-height:1.6;max-width:48ch;margin:14px 0 26px;}
 
 .hero-slider-nav{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:0 16px;pointer-events:none;}
 .hero-arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(15,12,8,.35);backdrop-filter:blur(4px);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s, transform .15s;}
@@ -186,10 +192,11 @@ p{color:var(--text-soft);}
 .hero-stat-strip .m-lbl{color:#C7CBDA;max-width:none;}
 
 @media (max-width:960px){
-  .hero-banner-content .eyebrow{margin-bottom:10px;}
+  .hero-text-panel{max-width:100%;}
 }
 @media (max-width:720px){
   .hero-banner-media{aspect-ratio:auto;min-height:600px;}
+  .hero-text-panel{padding:24px 22px;border-radius:16px;}
   .hero-banner-content{padding-bottom:32px;}
   .hero-arrow{width:36px;height:36px;font-size:1.2rem;}
   .hero-slider-dots{top:auto;bottom:14px;right:50%;transform:translateX(50%);}
