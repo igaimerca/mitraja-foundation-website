@@ -60,3 +60,82 @@ if (backToTop) {
     if (href === path || (href !== '/' && path.endsWith(href))) a.classList.add('active');
   });
 })();
+
+// Lightbox: click any real photo (gallery grids, photo tiles, activity
+// cards, standalone .img-zoomable images) to view it full-screen, step
+// through the rest of its group with arrows/keys, and click to zoom to
+// full resolution. Uses click delegation so it also picks up images the
+// live activity feed (js/activities.js) injects after this script runs.
+(function lightbox() {
+  const CLICKABLE = '.photo-gallery img, .photo-block.has-photo img, .activity-cover img, .img-zoomable';
+
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML =
+    '<button class="lb-close" aria-label="Close">&times;</button>' +
+    '<button class="lb-prev" aria-label="Previous image">&#8249;</button>' +
+    '<div class="lb-stage"><img class="lb-img" alt=""></div>' +
+    '<button class="lb-next" aria-label="Next image">&#8250;</button>' +
+    '<div class="lb-counter"></div>' +
+    '<div class="lb-hint">Click image to zoom &middot; Esc to close</div>';
+  document.body.appendChild(lb);
+
+  const stage = lb.querySelector('.lb-stage');
+  const lbImg = lb.querySelector('.lb-img');
+  const counter = lb.querySelector('.lb-counter');
+  const btnPrev = lb.querySelector('.lb-prev');
+  const btnNext = lb.querySelector('.lb-next');
+
+  let group = [];
+  let index = 0;
+
+  function groupFor(img) {
+    const container = img.closest('.photo-gallery, .card-grid, .approach-list') || img.closest('section') || document.body;
+    return Array.from(container.querySelectorAll(CLICKABLE));
+  }
+
+  function render() {
+    const img = group[index];
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    lbImg.classList.remove('zoomed');
+    stage.scrollTop = 0; stage.scrollLeft = 0;
+    const multi = group.length > 1;
+    counter.textContent = multi ? (index + 1) + ' / ' + group.length : '';
+    btnPrev.style.display = multi ? 'flex' : 'none';
+    btnNext.style.display = multi ? 'flex' : 'none';
+  }
+  function open(img) {
+    group = groupFor(img);
+    index = group.indexOf(img);
+    if (index < 0) { group = [img]; index = 0; }
+    render();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function prev() { index = (index - 1 + group.length) % group.length; render(); }
+  function next() { index = (index + 1) % group.length; render(); }
+
+  document.addEventListener('click', (e) => {
+    const img = e.target.closest(CLICKABLE);
+    if (img) open(img);
+  });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  btnPrev.addEventListener('click', prev);
+  btnNext.addEventListener('click', next);
+  stage.addEventListener('click', (e) => { if (e.target === stage) close(); });
+  lbImg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lbImg.classList.toggle('zoomed');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') prev();
+    else if (e.key === 'ArrowRight') next();
+  });
+})();
